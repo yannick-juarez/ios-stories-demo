@@ -1,9 +1,17 @@
+//
+//  StoryStateStore.swift
+//  StoriesDemo
+//
+//  Created by Yannick Juarez on 21/04/2026.
+//
+
 import Combine
 import Foundation
 import SwiftUI
 
 @MainActor
 final class StoryStateStore: ObservableObject {
+
     @Published private(set) var seenStoryIDs: Set<String>
     @Published private(set) var likedItemIDs: Set<String>
 
@@ -31,13 +39,17 @@ final class StoryStateStore: ObservableObject {
         likedItemIDs.contains(itemID)
     }
 
-    func toggleLike(itemID: String) {
+    @discardableResult
+    func toggleLike(itemID: String) -> Bool {
         if likedItemIDs.contains(itemID) {
             likedItemIDs.remove(itemID)
+            persistLiked()
+            return false
         } else {
             likedItemIDs.insert(itemID)
+            persistLiked()
+            return true
         }
-        persistLiked()
     }
 
     func storyHasLikedItems(_ story: Story) -> Bool {

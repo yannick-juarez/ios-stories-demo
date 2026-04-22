@@ -10,15 +10,23 @@ import SwiftUI
 @main
 struct StoriesDemoApp: App {
     @StateObject private var storyStateStore = StoryStateStore()
+    @StateObject private var analyticsStore = StoryAnalyticsStore()
     @StateObject private var themeStore = ThemeStore()
 
     var body: some Scene {
         WindowGroup {
-            StoriesRootView()
-                .environmentObject(storyStateStore)
-                .environmentObject(themeStore)
-                .tint(themeStore.currentTheme.tintColor)
-                .preferredColorScheme(themeStore.currentTheme.preferredColorScheme)
+            if let preferredColorScheme = themeStore.currentTheme.preferredColorScheme {
+                StoriesRootView()
+                    .environmentObject(storyStateStore)
+                    .environmentObject(analyticsStore)
+                    .environmentObject(themeStore)
+                    .colorScheme(preferredColorScheme)
+            } else {
+                StoriesRootView()
+                    .environmentObject(storyStateStore)
+                    .environmentObject(analyticsStore)
+                    .environmentObject(themeStore)
+            }
         }
     }
 }

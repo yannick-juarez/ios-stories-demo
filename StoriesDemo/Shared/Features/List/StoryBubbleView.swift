@@ -11,17 +11,20 @@ struct StoryBubbleView: View {
     let story: Story
     let isSeen: Bool
     let hasLike: Bool
-    let theme: Theme
+
+    @EnvironmentObject private var themeStore: ThemeStore
+
+    private var theme: Theme { themeStore.currentTheme }
 
     var body: some View {
         VStack(spacing: 8) {
             ZStack(alignment: .bottomTrailing) {
-                StoryAvatarView(url: story.user.avatarURL, isSeen: isSeen, theme: theme)
+                StoryAvatarView(url: story.user.avatarURL, isSeen: isSeen)
 
                 if hasLike {
                     Image(systemName: "heart.fill")
                         .font(.caption2.weight(.bold))
-                        .foregroundStyle(theme.viewer.chromeColor)
+                        .foregroundStyle(theme.likeIconColor)
                         .padding(6)
                         .background(theme.likeColor, in: Circle())
                         .offset(x: 4, y: 2)
@@ -36,5 +39,15 @@ struct StoryBubbleView: View {
                     .frame(width: theme.avatar.frameSize)
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(story.user.username)
+        .accessibilityValue(accessibilityValue)
+        .accessibilityHint("Opens this story")
+    }
+
+    private var accessibilityValue: String {
+        let seenValue = isSeen ? "Seen" : "Unseen"
+        let likeValue = hasLike ? "Contains liked content" : "No liked content"
+        return "\(seenValue), \(likeValue)"
     }
 }

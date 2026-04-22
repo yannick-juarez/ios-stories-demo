@@ -12,9 +12,7 @@ extension Theme {
     static let dualCamera = Theme(
         id: "timeSensitive",
         title: "Dual Camera",
-        tintColor: .white,
         surfaces: Surfaces(
-            railBackgroundColor: Color(white: 0.04),
             canvasColor: .black,
             secondaryCanvasColor: Color(white: 0.1)
         ),
@@ -25,24 +23,28 @@ extension Theme {
         ),
         avatar: Avatar(
             imageSize: 68,
-            frameSize: 74,
             ringWidth: 3,
-            seenRingColor: Color(white: 0.4),
+            ringSpacing: 0,
+            seenRingColor: Color(white: 0.45),
             unseenRingGradient: LinearGradient(
-                colors: [Color.white, Color(white: 0.7)],
+                colors: [Color.white, Color(white: 0.82)],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
-            )
+            ),
+            imageCornerRadiusRatio: 0.22,
+            ringCornerRadiusRatio: 0.22
         ),
         viewer: Viewer(
             backgroundColor: .black,
             chromeColor: .white,
-            badgeBackgroundColor: .white.opacity(0.12),
-            buttonBackgroundColor: .white.opacity(0.12),
+            badgeBackgroundColor: .black.opacity(0.4),
+            buttonBackgroundColor: .black.opacity(0.4),
             progressTrackColor: .white.opacity(0.2),
-            progressFillColor: .white
+            progressFillColor: .white,
+            transition: .linear
         ),
         likeColor: .white,
+        likeIconColor: .black,
         preferredColorScheme: .dark
     )
 

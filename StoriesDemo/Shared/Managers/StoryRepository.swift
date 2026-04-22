@@ -14,7 +14,7 @@ protocol StoryRepositoryProtocol {
 struct StoryRepository: StoryRepositoryProtocol {
     private let baseStories: [Story]
 
-    nonisolated init(baseCount: Int = 24, itemsPerStory: Int = 3) {
+    nonisolated init(baseCount: Int = 32, itemsPerStory: Int = 3) {
         self.baseStories = StoryRepository.generateBaseStories(count: baseCount, itemsPerStory: itemsPerStory)
     }
 

@@ -1,3 +1,10 @@
+//
+//  StoryListViewModel.swift
+//  StoriesDemo
+//
+//  Created by Yannick Juarez on 22/04/2026.
+//
+
 import Combine
 import Foundation
 
@@ -5,13 +12,16 @@ import Foundation
 final class StoryListViewModel: ObservableObject {
 
     @Published private(set) var stories: [Story] = []
+    @Published private(set) var isLoading = false
 
     private let repository: StoryRepositoryProtocol
     private let pageSize: Int
     private var currentPage = 0
-    private var isLoading = false
 
-    init(repository: StoryRepositoryProtocol = StoryRepository(), pageSize: Int = 12) {
+    init(
+        repository: StoryRepositoryProtocol = StoryRepository(),
+        pageSize: Int = 12
+    ) {
         self.repository = repository
         self.pageSize = pageSize
     }
@@ -33,6 +43,7 @@ final class StoryListViewModel: ObservableObject {
         }
 
         isLoading = true
+
         let next = repository.fetchStories(page: currentPage, pageSize: pageSize)
         stories.append(contentsOf: next)
         currentPage += 1
